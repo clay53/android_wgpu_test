@@ -15,7 +15,7 @@ var<private> full: array<vec2<f32>, 6> = array<vec2<f32>, 6>(
 // Vertex shader
 
 [[stage(vertex)]]
-fn main(
+fn vs_main(
     [[builtin(vertex_index)]] vertex_index: u32,
 ) -> VertexOutput {
     var out: VertexOutput;
@@ -27,7 +27,7 @@ fn main(
 // Fragment shader
 
 [[stage(fragment)]]
-fn main(
+fn fs_main(
     in: VertexOutput,
 ) -> [[location(0)]] vec4<f32> {
     return in.color;
