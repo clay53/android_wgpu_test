@@ -198,7 +198,7 @@ pub fn main() {
                             depth_stencil_attachment: None,
                         });
                         render_pass.set_pipeline(&renderer.pipeline);
-                        render_pass.draw(0..6, 0..1);
+                        render_pass.draw(0..3, 0..1);
                         drop(render_pass);
                         renderer.queue().submit(std::iter::once(encoder.finish()));
                         surface_texture.present();
