@@ -1,23 +1,40 @@
 struct VertexOutput {
-    [[builtin(position)]] clip_position: vec4<f32>;
+    [[builtin(position)]] position: vec4<f32>;
+    [[location(0)]] color: vec4<f32>;
 };
 
 // Vertex shader
 
 [[stage(vertex)]]
 fn vs_main(
-    [[builtin(vertex_index)]] in_vertex_index: u32
+    [[builtin(vertex_index)]] vertex_index: u32,
 ) -> VertexOutput {
     var out: VertexOutput;
-    let x = f32(1 - i32(in_vertex_index)) * 0.5;
-    let y = f32(i32(in_vertex_index & 1u) * 2 - 1) * 0.5;
-    out.clip_position = vec4<f32>(x, y, 0.0, 1.0);
+
+    switch (vertex_index) {
+        case 0, 3: {
+            out.position = vec4<f32>(-0.5, -0.5, 0.0, 1.0);
+        }
+        case 1: {
+            out.position = vec4<f32>(0.5, -0.5, 0.0, 1.0);
+        }
+        case 2, 4: {
+            out.position = vec4<f32>(0.5, 0.5, 0.0, 1.0);
+        }
+        case 5: {
+            out.position = vec4<f32>(-0.5, 0.5, 0.0, 1.0);
+        }
+    }
+
+    out.color = vec4<f32>(1.0, 1.0, 1.0, 1.0);
     return out;
 }
 
 // Fragment shader
 
 [[stage(fragment)]]
-fn fs_main(in: VertexOutput) -> [[location(0)]] vec4<f32> {
-    return vec4<f32>(1.0, 1.0, 1.0, 1.0);
+fn fs_main(
+    in: VertexOutput,
+) -> [[location(0)]] vec4<f32> {
+    return in.color;
 }
